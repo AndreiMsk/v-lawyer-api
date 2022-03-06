@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* UNAUTHENTICATED  */
+// Route::get('/chat', [ChatController::class, 'index']);
+
+
+// Route::post('/chat/{channel?}', [ChatController::class, 'join']);
+
+Route::get('chat/get-channels', [ChatController::class, 'index']);
+Route::post('/chat/add-message/{channel}/message/{message}', [ChatController::class, 'addMessage']);
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+

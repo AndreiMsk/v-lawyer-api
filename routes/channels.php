@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('my-channel', function ($user, $id) {
+    // return (int) $user->id === (int) $id;
+    return true;
 });
+
+
+// Broadcast::channel('channel.{channelName}', function ($user, $eventId) {
+//     if(in_array($user->userType, ['admin', 'curator'])) {
+//         return true;
+//     }
+//     return $user->tickets_event_id === Event::findOrNew($eventId)->tickets_event_id;
+// });
