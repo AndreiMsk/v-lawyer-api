@@ -31,13 +31,20 @@ class EventChannel implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['my-chat-channel'];
-        // return [$this->channel->name];
+        return ['admin-channel'];
     }
   
     public function broadcastAs()
-    {
+    {   
         return 'channel-created';
+    }
+
+    public function broadcastWith()
+    {   
+        return [
+            'channel' => $this->channel,
+            'messages' => $this->channel->messages
+        ];
     }
 
 }

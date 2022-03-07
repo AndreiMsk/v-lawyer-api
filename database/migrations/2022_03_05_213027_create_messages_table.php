@@ -17,12 +17,12 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['read', 'not_read'])->default('not_read');
 
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Channel::class)->default(null);
 
             $table->text('message');
-            $table->enum('status', ['closed', 'active'])->default('active');
             $table->timestamps();
         });
     }

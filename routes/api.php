@@ -16,17 +16,13 @@ use App\Http\Controllers\ChatController;
 */
 
 /* UNAUTHENTICATED  */
-// Route::get('/chat', [ChatController::class, 'index']);
-
-
-// Route::post('/chat/{channel?}', [ChatController::class, 'join']);
-
+/* get all live chat channels - ADMIN  */
 Route::get('chat/get-channels', [ChatController::class, 'index']);
+/* add live chat message  */
 Route::post('/chat/add-message/{channel}/message/{message}', [ChatController::class, 'addMessage']);
+/* update status message - read or not read */
+Route::post('/chat/update-messages/{channel}', [ChatController::class, 'updateMessageStatus']);
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 

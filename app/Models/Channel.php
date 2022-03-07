@@ -17,5 +17,4 @@ class Channel extends Model
     {
         return $this->hasMany(Message::class);
     }
-
 }
