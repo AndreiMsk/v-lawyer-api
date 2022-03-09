@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->enum('status', ['read', 'not_read'])->default('not_read');
+            $table->enum('sender', ['user', 'guest', 'admin'])->default('guest');
 
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Channel::class)->default(null);

@@ -13,7 +13,8 @@ class Message extends Model
         'message',
         'user_id',
         'channel_id',
-        'status'
+        'status',
+        'sender'
     ];
 
 

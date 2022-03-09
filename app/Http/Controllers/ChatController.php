@@ -27,15 +27,15 @@ class ChatController extends Controller
     }
 
 
-    public function addMessage($channel, $message)
+    public function addMessage(Request $request)
     {
         //validation here
 
         DB::beginTransaction();
         try {
 
-            if ($channel !== 'null') {
-                $channelModel = Channel::whereName($channel)->first();
+            if ($request->channel !== 'null') {
+                $channelModel = Channel::whereName($request->channel)->first();
             } else {
                 $channelModel = Channel::create([
                     'name' => bin2hex(openssl_random_pseudo_bytes(4))
@@ -46,7 +46,8 @@ class ChatController extends Controller
             $message = Message::create([
                 'channel_id' =>  $channelModel->id,
                 'user_id' => 99999,
-                'message' => $message
+                'message' => $request->message,
+                'sender' => $request->sender 
             ]);
 
             /* send event to admin to listen only if it's new */

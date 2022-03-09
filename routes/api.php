@@ -19,7 +19,7 @@ use App\Http\Controllers\ChatController;
 /* get all live chat channels - ADMIN  */
 Route::get('chat/get-channels', [ChatController::class, 'index']);
 /* add live chat message  */
-Route::post('/chat/add-message/{channel}/message/{message}', [ChatController::class, 'addMessage']);
+Route::post('/chat/add-message', [ChatController::class, 'addMessage']);
 /* update status message - read or not read */
 Route::post('/chat/update-messages/{channel}', [ChatController::class, 'updateMessageStatus']);
 
