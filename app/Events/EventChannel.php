@@ -42,8 +42,11 @@ class EventChannel implements ShouldBroadcast
     public function broadcastWith()
     {   
         return [
-            'channel' => $this->channel,
-            'messages' => $this->channel->messages
+            'id' => $this->channel->id,
+            'name' => $this->channel->name,
+            'status' => $this->channel->status,
+            'messages' => []
+            // 'messages' => $this->channel->messages
         ];
     }
 

@@ -34,7 +34,7 @@ class EventMessage implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return [$this->channel->name];
+        return [$this->channel->name, 'admin-channel'];
     }
   
     public function broadcastAs()

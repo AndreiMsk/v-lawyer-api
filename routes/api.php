@@ -23,6 +23,9 @@ Route::post('/chat/add-message', [ChatController::class, 'addMessage']);
 /* update status message - read or not read */
 Route::post('/chat/update-messages/{channel}', [ChatController::class, 'updateMessageStatus']);
 
+/**AUTH HERE */
+Route::post('/chat/close-chat/{channel}', [ChatController::class, 'closeChat']);
+
 
 
 

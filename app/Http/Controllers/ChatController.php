@@ -12,8 +12,8 @@ use App\Events\EventChannel;
 class ChatController extends Controller
 {
 
-    CONST MESSAGE_WAS_READ = 'read';
-    CONST MESSAGE_WAS_NOT_READ = 'not_read';
+    const MESSAGE_WAS_READ = 'read';
+    const MESSAGE_WAS_NOT_READ = 'not_read';
 
     /* get live chat channels */
     public function index()
@@ -47,29 +47,31 @@ class ChatController extends Controller
                 'channel_id' =>  $channelModel->id,
                 'user_id' => 99999,
                 'message' => $request->message,
-                'sender' => $request->sender 
+                'sender' => $request->sender
             ]);
 
             /* send event to admin to listen only if it's new */
-            if($channelModel->wasRecentlyCreated) {
-                EventChannel::dispatch($channelModel);
+            if ($channelModel->wasRecentlyCreated) {
+                broadcast(new EventChannel($channelModel))->toOthers();
             }
+            
+            broadcast(new EventMessage($channelModel, $message))->toOthers();
 
-            EventMessage::dispatch($channelModel, $message);
             DB::commit();
 
-            return response()->json(['data' => $channelModel->name], 200);
+            return response()->json(['data' => $channelModel], 200);
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json(['data' => $th->getMessage()]);
         }
     }
 
-    public function updateMessageStatus($channel) {
+    public function updateMessageStatus($channel)
+    {
         $channel = Channel::find($channel);
 
-        if(!$channel) {
-            return response()->json(['data' => 'Error - model missing'], 500);
+        if (!$channel) {
+            return response()->json(['data' => 'Error -channel model missing'], 500);
         }
 
         foreach ($channel->messages as $message) {
@@ -78,6 +80,19 @@ class ChatController extends Controller
         }
 
         return response()->json(['data' => 'All done'], 200);
+    }
 
+    public function closeChat($channel) {
+
+        $channel = Channel::find($channel);
+
+        if (!$channel) {
+            return response()->json(['data' => 'Error - channel model missing'], 500);
+        }
+
+        $channel->status = "closed";
+        $channel->save();
+
+        return response()->json(['data' => 'All done'], 200);
     }
 }
