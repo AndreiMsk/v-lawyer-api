@@ -15,6 +15,10 @@ use App\Http\Controllers\ChatController;
 |
 */
 
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 /* UNAUTHENTICATED  */
 /* get all live chat channels - ADMIN  */
 Route::get('chat/get-channels', [ChatController::class, 'index']);
@@ -25,7 +29,3 @@ Route::post('/chat/update-messages/{channel}', [ChatController::class, 'updateMe
 
 /**AUTH HERE */
 Route::post('/chat/close-chat/{channel}', [ChatController::class, 'closeChat']);
-
-
-
-
